@@ -5,24 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>การ์ดอวยพร</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Supabase & Interact.js -->
+    <!-- Supabase (ลบ Interact.js ออกแล้ว) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
 </head>
 <body class="board-body">
-    <!-- ⚠️ อย่าลืมแก้ตรง src เป็นลิงก์เพลงวันเกิดไทยของคุณ -->
+    <!-- ⚠️ อย่าลืมใส่ลิงก์เพลงตรงนี้ -->
     <audio id="bg-music" src="BD2.mp3" autoplay loop></audio>
 
     <div class="board" id="card-board">
-        <h2 class="board-title">ลากเพื่อจัดเรียง เปิดซองเพื่ออ่านคำอวยพร 💌</h2>
+        <h2 class="board-title">กดที่ซองเพื่ออ่านคำอวยพร 💌</h2>
         <div id="envelopes-container">
-            <!-- ซองจดหมายจะถูกสร้างผ่าน JavaScript ที่นี่ -->
+            <!-- ซองจดหมายจะโผล่ที่นี่ -->
+        </div>
+    </div>
+
+    <!-- กล่อง Pop-up สำหรับเปิดการ์ด -->
+    <div id="card-popup" class="modal-overlay">
+        <div class="modal-card">
+            <span class="close-modal" onclick="closeCardPopup()">&times;</span>
+            <h3 id="popup-sender" style="color: #ff7675;"></h3>
+            <p id="popup-message" style="font-size: 18px; margin-top: 15px;"></p>
+            <div id="popup-image-container"></div>
         </div>
     </div>
 
     <script src="app.js"></script>
     <script>
-        // เรียกใช้ฟังก์ชันดึงข้อมูลเมื่อโหลดหน้าเสร็จ
         window.onload = loadGreetings;
     </script>
 </body>
