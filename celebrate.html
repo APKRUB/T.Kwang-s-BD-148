@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ฉลองวันเกิด!</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- ดึง library สำหรับทำพลุ -->
+    <script src="[https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js](https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js)"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>สุขสันต์วันเกิด! 🎂🎉</h1>
+        
+        <!-- รูปเค้กหรือ CSS Cake -->
+        <div class="cake-box" style="font-size: 80px; margin: 20px 0;">
+            🎂
+        </div>
+
+        <!-- ⚠️ อย่าลืมแก้ตรง src เป็นลิงก์ไฟล์เสียงของคุณ -->
+        <audio id="hbd-sound" src="BD Song.mp3" autoplay></audio>
+        
+        <button onclick="window.location.href='cards.html'" style="margin-top: 30px;">ไปดูคำอวยพรกันเถอะ ➔</button>
+    </div>
+    <script>
+        // ยิงพลุเมื่อโหลดหน้าเว็บ
+        window.onload = function() {
+            confetti({
+                particleCount: 200,
+                spread: 100,
+                origin: { y: 0.6 }
+            });
+        };
+    </script>
+</body>
+</html>
