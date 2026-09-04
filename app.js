@@ -1,8 +1,6 @@
-// 1. ใส่ URL และ Key ของคุณ
 const supabaseUrl = 'https://xpuxusyeicegrbmbnaix.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhwdXh1c3llaWNlZ3JibWJuYWl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0ODA4MzAsImV4cCI6MjEwNDA1NjgzMH0.nIxNFFXhKBM__1qrae57J_xCdnXMkecRPW-GT1cVUPA';
 
-// 2. ใช้ window.supabase เพื่อบังคับให้ระบบไปเรียกตัวหลัก ลดปัญหา Error
 const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 // ==========================================
@@ -61,7 +59,7 @@ async function submitGreeting(e) {
 }
 
 // ==========================================
-// 2. ระบบกระดานซองจดหมาย (แบบลอยและ Popup)
+// 2. ระบบกระดานซองจดหมายหน้า cards.html (ลอย + ลาก + Popup)
 // ==========================================
 async function loadGreetings() {
     const container = document.getElementById('envelopes-container');
@@ -76,21 +74,22 @@ async function loadGreetings() {
         if (error) throw error;
 
         data.forEach((greeting) => {
-            // สุ่มตำแหน่งให้อยู่ในกรอบหน้าจอ
-            const maxX = window.innerWidth - 180;
-            const maxY = window.innerHeight - 150;
+            const maxX = window.innerWidth - 200;
+            const maxY = window.innerHeight - 200;
             const randomX = Math.max(20, Math.random() * maxX);
             const randomY = Math.max(100, Math.random() * maxY);
 
-            // สร้าง Wrapper
             const wrapper = document.createElement('div');
-            wrapper.className = 'envelope-wrapper floating';
-            wrapper.style.left = `${randomX}px`;
-            wrapper.style.top = `${randomY}px`;
-            // สุ่มให้แต่ละซองลอยจังหวะไม่พร้อมกัน
+            wrapper.className = 'envelope-wrapper draggable floating';
+            
+            wrapper.style.setProperty('--startX', `${randomX}px`);
+            wrapper.style.setProperty('--startY', `${randomY}px`);
+            wrapper.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            
+            wrapper.setAttribute('data-x', randomX);
+            wrapper.setAttribute('data-y', randomY);
             wrapper.style.animationDelay = `${Math.random() * 3}s`;
 
-            // สร้างตัวซอง
             const envelope = document.createElement('div');
             envelope.className = `envelope ${greeting.envelope_style}`;
             envelope.innerText = `To: Birthday Boy/Girl\nFrom: ${greeting.sender_name}`;
@@ -98,10 +97,29 @@ async function loadGreetings() {
             wrapper.appendChild(envelope);
             container.appendChild(wrapper);
 
-            // กดที่ซองแล้วเปิด Pop-up
+            let isDragging = false;
+            wrapper.addEventListener('pointerdown', () => { isDragging = false; });
+            wrapper.addEventListener('pointermove', () => { isDragging = true; });
+            
             wrapper.addEventListener('click', () => {
-                openCardPopup(greeting);
+                if (!isDragging) {
+                    openCardPopup(greeting);
+                }
             });
+        });
+
+        interact('.draggable').draggable({
+            inertia: true,
+            modifiers: [
+                interact.modifiers.restrictRect({
+                    restriction: 'parent',
+                    endOnly: true
+                })
+            ],
+            autoScroll: true,
+            listeners: {
+                move: dragMoveListener,
+            }
         });
 
     } catch (error) {
@@ -109,14 +127,26 @@ async function loadGreetings() {
     }
 }
 
-// ฟังก์ชันสำหรับเปิด Pop-up
+function dragMoveListener (event) {
+    var target = event.target;
+    var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+    var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+    target.style.setProperty('--startX', `${x}px`);
+    target.style.setProperty('--startY', `${y}px`);
+    target.style.transform = `translate(${x}px, ${y}px)`;
+
+    target.setAttribute('data-x', x);
+    target.setAttribute('data-y', y);
+}
+
 function openCardPopup(greeting) {
     document.getElementById('popup-sender').innerText = `จาก: ${greeting.sender_name}`;
     document.getElementById('popup-message').innerText = greeting.message;
 
     const imgContainer = document.getElementById('popup-image-container');
     if (greeting.image_url) {
-        imgContainer.innerHTML = `<img src="${greeting.image_url}" alt="รูปแนบ">`;
+        imgContainer.innerHTML = `<img src="${greeting.image_url}" alt="รูปแนบ" style="max-width: 100%; border-radius: 10px; margin-top: 15px;">`;
     } else {
         imgContainer.innerHTML = '';
     }
@@ -124,7 +154,6 @@ function openCardPopup(greeting) {
     document.getElementById('card-popup').classList.add('active');
 }
 
-// ฟังก์ชันสำหรับปิด Pop-up
 function closeCardPopup() {
     document.getElementById('card-popup').classList.remove('active');
 }
