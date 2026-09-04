@@ -155,3 +155,68 @@ label {
     transform: scale(0.95);
     opacity: 0.6;
 }
+
+/* =========================================
+   สไตล์สำหรับ Pop-up และ Floating
+   ========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+.modal-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 400px;
+    width: 85%;
+    text-align: center;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+    position: relative;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+.modal-overlay.active .modal-card {
+    transform: scale(1);
+}
+.close-modal {
+    position: absolute;
+    top: 5px; right: 15px;
+    font-size: 30px;
+    cursor: pointer;
+    color: #b2bec3;
+    transition: 0.2s;
+}
+.close-modal:hover { color: #ff7675; }
+.modal-card img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+/* แอนิเมชันลอยไปมา */
+@keyframes floating {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(3deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+.floating {
+    animation: floating 4s infinite ease-in-out;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.floating:hover {
+    animation-play-state: paused;
+    transform: scale(1.1) !important;
+}
+/* แก้ให้ซองใช้ตำแหน่ง Absolute ได้อิสระ */
+.envelope-wrapper { position: absolute; }
