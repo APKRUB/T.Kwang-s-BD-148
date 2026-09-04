@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เขียนคำอวยพร</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Supabase -->
+    <script src="[https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2](https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2)"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>มาร่วมอวยพรวันเกิดกัน! ✍️</h2>
+        <form id="greeting-form">
+            <input type="text" id="senderName" placeholder="ชื่อของคุณ (เช่น ไอ้ต้าวเพื่อนรัก)" required>
+            <textarea id="message" rows="4" placeholder="พิมพ์คำอวยพรที่นี่..." required></textarea>
+            
+            <label for="envelopeStyle">เลือกสีซองจดหมาย:</label>
+            <select id="envelopeStyle">
+                <option value="red">สีแดง (Red)</option>
+                <option value="blue">สีฟ้า (Blue)</option>
+                <option value="pink">สีชมพู (Pink)</option>
+                <option value="yellow">สีเหลือง (Yellow)</option>
+            </select>
+
+            <label for="imageUpload" style="margin-top: 15px; display: block;">แนบรูปภาพ (ถ้ามี):</label>
+            <input type="file" id="imageUpload" accept="image/*">
+
+            <button type="submit" style="margin-top: 20px;">ส่งคำอวยพร 💌</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('greeting-form').addEventListener('submit', submitGreeting);
+    </script>
+</body>
+</html>
