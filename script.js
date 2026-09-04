@@ -1,7 +1,7 @@
 // ⚠️ สำคัญมาก: เปลี่ยน 2 บรรทัดนี้เป็นค่าจาก Supabase Project ของคุณ
 const supabaseUrl = 'https://xpuxusyeicegrbmbnaix.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhwdXh1c3llaWNlZ3JibWJuYWl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0ODA4MzAsImV4cCI6MjEwNDA1NjgzMH0.nIxNFFXhKBM__1qrae57J_xCdnXMkecRPW-GT1cVUPA';
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
 // ==========================================
 // 1. ระบบฟอร์มหน้า form.html
