@@ -5,21 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>การ์ดอวยพร</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Supabase (ลบ Interact.js ออกแล้ว) -->
+    <!-- Supabase & Interact.js -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
 </head>
 <body class="board-body">
-    <!-- ⚠️ อย่าลืมใส่ลิงก์เพลงตรงนี้ -->
     <audio id="bg-music" src="BD2.mp3" autoplay loop></audio>
 
     <div class="board" id="card-board">
-        <h2 class="board-title">กดที่ซองเพื่ออ่านคำอวยพร 💌</h2>
-        <div id="envelopes-container">
-            <!-- ซองจดหมายจะโผล่ที่นี่ -->
-        </div>
+        <h2 class="board-title">ลากซองจดหมายเล่นได้ หรือกดเพื่อเปิดดูคำอวยพร 💌</h2>
+        <div id="envelopes-container"></div>
     </div>
 
-    <!-- กล่อง Pop-up สำหรับเปิดการ์ด -->
+    <!-- กล่อง Pop-up -->
     <div id="card-popup" class="modal-overlay">
         <div class="modal-card">
             <span class="close-modal" onclick="closeCardPopup()">&times;</span>
